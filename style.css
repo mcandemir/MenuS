@@ -46,22 +46,24 @@ body{
     min-width: 500px;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    border: 1px solid #f1ee47;
+    /* border: 1px solid #f7f7f7; */
 }
 
 .menu-chosen-items-box{
     height: 90%;
-    border: 1px solid #39f7b7;
+    border: 1px solid #f58300;
 }
 
 .menu-items-box{
     height: 90%;
-    border: 1px solid #39f7b7;
+    border: 1px solid #f58300;
 }
 
 .menu-items-box, .menu-chosen-items-box{
     overflow: auto;
     overflow-x: hidden;
+    border-radius: 12px;
+    background-color: #1f1f1f;
 }
 
 .add-item-box{
@@ -91,8 +93,10 @@ body{
 /*=====*/
 
 .menu-list-item{
+    /*VARS*/
+    --menu-list-item-height: 120px;
+    --menu-list-item-width: 120px;
     background: #E36414;
-    height: 130px;
     margin: 5px;
     /* border: 1px solid greenyellow; */
     border-radius: 15px;
@@ -111,8 +115,8 @@ body{
 }
 
 .menu-list-item .details .details-image{
-    width: 120px;
-    height: 120px;
+    width: var(--menu-list-item-width);
+    height: var(--menu-list-item-height);
     margin: 5px;
     margin-right: auto;
     object-fit: cover;
