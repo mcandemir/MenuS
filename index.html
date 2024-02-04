@@ -4,129 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
-    <div class="title">
+    <div class="container-xxl title">
         <h1>
             MenuS
         </h1>
     </div>
     
-    <div class="main-box">
-        <div class="left-box">
+    <div class="container-xxl option-box">
+            
+    </div>
 
-            <div class="selectbox-box">
-                <div class="select-topic-selectbox">
-                    <select class="topics" id="topics" onchange="attuneListByTopic()">
-                        <option value="all">All</option>
-                        <option value="cold-drinks">Cold Drinks</option>
-                        <option value="fast-food">Fast-Food</option>
-                        <option value="pasta">Pasta</option>
-                    </select>
-                    <br><br>
+    <div class="container-xxl main-box">
+        <div class="container-xxl left-box">
+            <div class="container-xxl grid-table">
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <img src="images/hamburger.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="images/frenchfries.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                          </div>
+                    </div>
                 </div>
-    
-                <div class="select-sortby-selectbox">
-                    <select class="sortby" id="sortby">
-                        <option value="name">by Name</option>
-                        <option value="Price">by Price</option>
-                    </select>
-                    <br><br>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <img src="images/hamburger.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="images/frenchfries.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <img src="images/hamburger.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="images/frenchfries.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                          </div>
+                    </div>
                 </div>
             </div>
-
-            <ul class="menu-chosen-items-box">
-                <li class="menu-list-item cold-drinks" draggable="true">
-                    <div class="details">
-                        <img src="images/water.jpg" alt="" class="details-image">
-                        <span class="details-name">Water</span>
-                        <span class="details-price">4.99₺</span>
-                        <div class="i uil uil-draggabledots"></div>
-                        <button class="remove" id="remove" onclick="removeItem(event)">X</button>
-                    </div>
-                </li>
-            </ul>
         </div>
 
-        <div class="right-box">
-            <div class="add-item-box">
-                <button onclick="addItemPopup()" class="add-item-button" type="button">
-                    Add Item
-                </button>
-            </div>
-
-            <ul class="menu-items-box">
-                <li class="menu-list-item cold-drinks" draggable="true">
-                    <div class="details">
-                        <img src="images/coke.jpg" alt="" class="details-image">
-                        <span class="details-name">Coke</span>
-                        <span class="details-price">5.99₺</span>
-                        <div class="i uil uil-draggabledots"></div>
-                        <button class="remove" id="remove" onclick="removeItem(event)">X</button>
-                    </div>
-                </li>
-                <li class="menu-list-item cold-drinks" draggable="true">
-                    <div class="details">
-                        <img src="images/lemonade.jpg" alt="" class="details-image">
-                        <span class="details-name">Lemonade</span>
-                        <span class="details-price">9.99₺</span>
-                        <div class="i uil uil-draggabledots"></div>
-                        <button class="remove" id="remove" onclick="removeItem(event)">X</button>
-                    </div>
-                </li>
-                <li class="menu-list-item fast-food" draggable="true">
-                    <div class="details">
-                        <img src="images/frenchfries.jpg" alt="" class="details-image">
-                        <span class="details-name">French Fries</span>
-                        <span class="details-price">19.99₺</span>
-                        <div class="i uil uil-draggabledots"></div>
-                        <button class="remove" id="remove" onclick="removeItem(event)">X</button>
-                    </div>
-                </li>
-                <li class="menu-list-item fast-food" draggable="true">
-                    <div class="details">
-                        <img src="images/hamburger.jpg" alt="" class="details-image">
-                        <span class="details-name">Hamburger</span>
-                        <span class="details-price">29.99₺</span>
-                        <div class="i uil uil-draggabledots"></div>
-                        <button class="remove" id="remove" onclick="removeItem(event)">X</button>
-                    </div>
-                </li>
-                <li class="menu-list-item pasta" draggable="true">
-                    <div class="details">
-                        <img src="images/alpacinopasta.png" alt="" class="details-image">
-                        <span class="details-name">Al Pacino Pasta</span>
-                        <span class="details-price">29.99₺</span>
-                        <div class="i uil uil-draggabledots"></div>
-                        <button class="remove" id="remove" onclick="removeItem(event)">X</button>
-                    </div>
-                </li>
-                <li class="menu-list-item pasta" draggable="true">
-                    <div class="details">
-                        <img src="images/currypasta.jpeg" alt="" class="details-image">
-                        <span class="details-name">Curry Pasta</span>
-                        <span class="details-price">29.99₺</span>
-                        <div class="i uil uil-draggabledots"></div>
-                        <button class="remove" id="remove" onclick="removeItem(event)">X</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    
-        <div class="add-item-popup add-item-popup-close">
-            <span>Name of the Menu</span>
-            <input class="menu-name-input" type="text" id="menu-name-input">
-            <span>Price</span>
-            <input class="menu-price-input" type="number" id="menu-price-input">
-            <span>Photo</span>
-            <div class="input_container">
-                <input class="menu-image-input" type="file" id="menu-image-input"
-            accept="image/jpeg, image/png, image/jpg">
-            </div>
-            <button onclick="addItem()" class="add-item">Add</button>
+        <div class="container-xxl right-box">
         </div>
     </div>
 
