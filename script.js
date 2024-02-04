@@ -1,19 +1,4 @@
-function getOnMenuItems(){
-    // get on-menu-items
-    let onMenuItems = document.querySelector('.on-menu-items');
-
-    // if on-menu-items is empty
-    if(onMenuItems.children.length == 0){
-        console.log('on-menu-items is empty');
-        return;
-    }
-
-    console.log(onMenuItems.children);
-    return onMenuItems;
-}
-
-
-function createOnMenuItemColElement(){
+function createOnMenuItemElement(){
     // create a column cardboard on-menu-item
     let newElementCol = document.createElement('div');
     newElementCol.className = 'col';
@@ -42,10 +27,9 @@ function createOnMenuItemColElement(){
     return newElementCol;
 }
 
-
-function createOnMenuItem(){
+function addOnMenuItem(){
     // get on-menu-items
-    let onMenuItems = getOnMenuItems();
+    let onMenuItems = document.querySelector('.on-menu-items');
 
     // add a row if none exists
     if(onMenuItems.children.length == 0){
@@ -56,11 +40,11 @@ function createOnMenuItem(){
 
     // get the last row element
     let lastElementRow = onMenuItems.children[onMenuItems.children.length - 1];
-    console.log(lastElementRow);
+    // console.log(lastElementRow);
 
     // get the last row element's columns
     let lastElementCols = lastElementRow.children;
-    console.log(lastElementCols);
+    // console.log(lastElementCols);
 
     // if last row has 2 cols; create a new row and make it last row
     if(lastElementCols.length == 2){
@@ -73,16 +57,60 @@ function createOnMenuItem(){
     lastElementRow = onMenuItems.children[onMenuItems.children.length - 1];
 
     // create new element col
-    newElementCol = createOnMenuItemColElement()
     // add the col to the last row
-    lastElementRow.appendChild(newElementCol);
+    lastElementRow.appendChild(createOnMenuItemElement());
+}
 
+function createOffMenuItemElement(){
+    let newElementCard = document.createElement('div');
+    newElementCard.className = 'card mb3';
+    let newElementCardRow = document.createElement('div');
+    newElementCardRow.className = 'row g-0';
+    let newElementCardRowCol = document.createElement('div');
+    newElementCardRowCol.className = 'col-md-4';
+    let newElementCardRowColImg = document.createElement('img');
+    newElementCardRowColImg.className = 'img-fluid rounded-start';
+    let newElementCardRowCol2 = document.createElement('div');
+    newElementCardRowCol2.className = 'col-md-8';
+    let newElementCardRowCol2Body = document.createElement('div');
+    newElementCardRowCol2Body.className = 'card-body';
+    let newElementCardRowCol2BodyTitle = document.createElement('h5');
+    newElementCardRowCol2BodyTitle.className = 'card-title';
+    let newElementCardRowCol2BodyTitle2 = document.createElement('h6');
+    newElementCardRowCol2BodyTitle2.className = 'card-title';
+
+    newElementCardRowCol2Body.appendChild(newElementCardRowCol2BodyTitle);
+    newElementCardRowCol2Body.appendChild(newElementCardRowCol2BodyTitle2);
+    newElementCardRowCol2.appendChild(newElementCardRowCol2Body);
+
+    newElementCardRowCol.appendChild(newElementCardRowColImg);
     
+    newElementCardRow.appendChild(newElementCardRowCol);
+    newElementCardRow.appendChild(newElementCardRowCol2);
 
+    newElementCard.appendChild(newElementCardRow);
+
+
+
+
+
+    return newElementCard
+}
+
+function addOffMenuItem(){
+    // get off-menu-items
+    let offMenuItems = document.querySelector('.off-menu-items');
+
+    offMenuItems.appendChild(createOffMenuItemElement());
+
+    console.log(offMenuItems.children);
 
 }
 
-createOnMenuItem()
+addOnMenuItem()
+
+addOffMenuItem()
+
 
 
 
