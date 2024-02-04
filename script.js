@@ -90,10 +90,6 @@ function createOffMenuItemElement(){
 
     newElementCard.appendChild(newElementCardRow);
 
-
-
-
-
     return newElementCard
 }
 
@@ -101,10 +97,15 @@ function addOffMenuItem(){
     // get off-menu-items
     let offMenuItems = document.querySelector('.off-menu-items');
 
+    // add off-menu-item element
     offMenuItems.appendChild(createOffMenuItemElement());
 
     console.log(offMenuItems.children);
 
+}
+
+function moveOffMenuMoveItem(){
+    
 }
 
 addOnMenuItem()
