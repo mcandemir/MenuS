@@ -94,6 +94,11 @@ body{
     background: #202020;
 }
 
+.left-box-hover:hover, .right-box-hover:hover{
+    background: #5e5e5e;
+    box-shadow: 0px 0px 10px 10px rgb(134, 134, 134);
+}
+
 /*=========*/
 /*GRIDTABLE*/
 /*=========*/
