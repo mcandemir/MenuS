@@ -66,6 +66,9 @@ function addOnMenuItem(title='Lorem Ipsum', text='Lorem Ipsum', title2='Lorem Ip
     // create new element col
     // add the col to the last row
     lastElementRow.appendChild(createOnMenuItemElement(title, text, title2));
+
+    // attune card event listeners
+    attuneCardEventListeners()
 }
 
 // create an off menu item
@@ -117,85 +120,81 @@ function addOffMenuItem(title='Lorem Ipsum', text='Lorem Ipsum', title2='Lorem I
     // add off-menu-item element
     offMenuItems.appendChild(createOffMenuItemElement(title, text, title2));
 
-    // console.log(offMenuItems.children);
-
-}
-
-// attune event listeners for off menu
-function attuneOffMenuEventListeners(){
-
+    // attune card event listeners
+    attuneCardEventListeners()
 }
 
 // attune event listeners for on menu
-function attuneOnMenuEventListeners(){
-    // from on-menu to off-menu
+function attuneCardEventListeners(){
+    // get on-menu-items and off-menu-items
     let onMenuItems = document.querySelector('.on-menu-items');
     let offMenuItems = document.querySelector('.off-menu-items');
 
-    let onMenuItemCards = onMenuItems.querySelectorAll('.card');
-    let offMenuItemCards = offMenuItems.querySelectorAll('.card');
-
+    // get all cards
     let allMenuItemCards = document.querySelectorAll('.card');
     
-    // console.log(allMenuItemCards);
-
+    // add event listeners to all cards
     for(let i=0; i<allMenuItemCards.length; i++){
-        allMenuItemCards[i].addEventListener('dragstart', function(e){
-            let selectedItem = e.target;
 
-            onMenuItems.addEventListener('dragover', function(e){
-                // if(selectedItem.classList.contains('on-menu-item')){
-                    
-                // }
-                e.preventDefault()
+        // if card has no event, add event
+        if(!(allMenuItemCards[i].classList.contains('has-event'))){
+            // dragstart event lsitener
+            allMenuItemCards[i].addEventListener('dragstart', function(e){
+                
+                // get the selected item
+                let selectedItem = e.target;
+
+                // prevent default dragover on-menu-items
+                onMenuItems.addEventListener('dragover', function(e){
+                    e.preventDefault();
+                });
+                // event listener drop on-menu-items
+                onMenuItems.addEventListener('drop', function(e){
+                    if(selectedItem == null){
+                        return;
+                    }
+                    // if selected card is an off-menu-item
+                    if(selectedItem.classList.contains('off-menu-item')){
+                        let selectedItemTitle = selectedItem.children[0].children[1].children[0].children[0].textContent;
+                        let selectedItemText = selectedItem.children[0].children[1].children[0].children[1].textContent;
+                        let selectedItemTitle2 = selectedItem.children[0].children[1].children[0].children[2].textContent;
+            
+                        console.log(selectedItemTitle)
+                        console.log(selectedItemText)
+                        console.log(selectedItemTitle2)
+
+                        addOnMenuItem(selectedItemTitle, selectedItemText, selectedItemTitle2)
+                        selectedItem = null;
+                    }
+                });
+
+                // prevent default dragover off-menu-items
+                offMenuItems.addEventListener('dragover', function(e){
+                    e.preventDefault();
+                });
+                // event listener drop off-menu-items
+                offMenuItems.addEventListener('drop', function(e){
+                    if(selectedItem == null){
+                        return;
+                    }
+                    // if selected card is an on-menu-item
+                    if(selectedItem.classList.contains('on-menu-item')){
+                        let selectedItemTitle = selectedItem.children[1].children[0].textContent;
+                        let selectedItemText = selectedItem.children[1].children[1].textContent;
+                        let selectedItemTitle2 = selectedItem.children[1].children[2].textContent;
+            
+                        console.log(selectedItemTitle)
+                        console.log(selectedItemText)
+                        console.log(selectedItemTitle2)
+
+                        addOffMenuItem(selectedItemTitle, selectedItemText, selectedItemTitle2)
+                        selectedItem = null;
+                    }
+                });
             });
-            onMenuItems.addEventListener('drop', function(e){
-                if(selectedItem == null){
-                    return;
-                }
-                if(selectedItem.classList.contains('off-menu-item')){
-                    let selectedItemTitle = selectedItem.children[0].children[1].children[0].children[0].textContent;
-                    let selectedItemText = selectedItem.children[0].children[1].children[0].children[1].textContent;
-                    let selectedItemTitle2 = selectedItem.children[0].children[1].children[0].children[2].textContent;
-        
-                    console.log(selectedItemTitle)
-                    console.log(selectedItemText)
-                    console.log(selectedItemTitle2)
+        }
 
-                    addOnMenuItem(selectedItemTitle, selectedItemText, selectedItemTitle2)
-                    selectedItem = null;
-                }
-            });
-
-
-
-
-
-
-            offMenuItems.addEventListener('dragover', function(e){
-                // if(selectedItem.classList.contains('on-menu-item')){
-                    
-                // }
-                e.preventDefault()
-            });
-            offMenuItems.addEventListener('drop', function(e){
-                if(selectedItem == null){
-                    return;
-                }
-                if(selectedItem.classList.contains('on-menu-item')){
-                    let selectedItemTitle = selectedItem.children[1].children[0].textContent;
-                    let selectedItemText = selectedItem.children[1].children[1].textContent;
-                    let selectedItemTitle2 = selectedItem.children[1].children[2].textContent;
-        
-                    console.log(selectedItemTitle)
-                    console.log(selectedItemText)
-                    console.log(selectedItemTitle2)
-
-                    addOffMenuItem(selectedItemTitle, selectedItemText, selectedItemTitle2)
-                    selectedItem = null;
-                }
-            });
-        });
+        allMenuItemCards[i].classList.add('has-event')
     }
 
 
@@ -230,8 +229,7 @@ addOnMenuItem()
 
 addOffMenuItem()
 
-attuneOnMenuEventListeners()
-
+attuneCardEventListeners()
 
 
 
