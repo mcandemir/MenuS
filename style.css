@@ -99,9 +99,9 @@ body{
     box-shadow: 0px 0px 10px 10px rgb(134, 134, 134);
 }
 
-/*=========*/
-/*GRIDTABLE*/
-/*=========*/
+/*==================*/
+/*GRID TABLE & CARDS*/
+/*==================*/
 
 .col{
     max-width: 40%;
@@ -138,7 +138,7 @@ body{
     color: #5e5e5e;
 }
 
-.off-menu-items .card .card-text{
+.off-menu-items .card-text{
     white-space: nowrap;
     overflow: hidden;
     display: block;
@@ -151,6 +151,9 @@ body{
 }
 
 /*=====*/
-/*ITEMS*/
+/*OTHER*/
 /*=====*/
 
+.dragging{
+    opacity: 0.5;
+}

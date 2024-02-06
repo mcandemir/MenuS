@@ -1,25 +1,37 @@
 // create an on menu item
-function createOnMenuItemElement(title, text, title2){
+function createOnMenuItemElement(id, img_src, title, text, title2){
     // create a column cardboard on-menu-item
     let newElementCol = document.createElement('div');
     newElementCol.className = 'col';
+    // newElementCol.setAttribute('draggable', 'false');
+
     let newElementColCard = document.createElement('div');
-    newElementColCard.className = 'card on-menu-item';
+    newElementColCard.className = `card on-menu-item id-${id}`;
     newElementColCard.setAttribute('draggable', 'true');
+    
     let newElementColCardImg = document.createElement('img');
     newElementColCardImg.className = 'card-img-top';
+    newElementColCardImg.setAttribute('src', img_src);
     newElementColCardImg.setAttribute('draggable', 'false');
+    
     let newElementColCardBody = document.createElement('div');
     newElementColCardBody.className = 'card-body';
+    // newElementColCardBody.setAttribute('draggable', 'false');
+    
     let newElementColCardBodyTitle = document.createElement('h5');
     newElementColCardBodyTitle.className = 'card-title';
     newElementColCardBodyTitle.textContent = title;
+    // newElementColCardBodyTitle.setAttribute('draggable', 'false');
+
     let newElementColCardBodyText = document.createElement('p');
     newElementColCardBodyText.className = 'card-text';
     newElementColCardBodyText.textContent = text;
+    // newElementColCardBodyText.setAttribute('draggable', 'false');
+    
     let newElementColCardBodyTitle2 = document.createElement('h6');
     newElementColCardBodyTitle2.className = 'card-title';
     newElementColCardBodyTitle2.textContent = title2;
+    // newElementColCardBodyTitle2.setAttribute('draggable', 'false');
 
     newElementColCardBody.appendChild(newElementColCardBodyTitle);
     newElementColCardBody.appendChild(newElementColCardBodyText);
@@ -33,66 +45,37 @@ function createOnMenuItemElement(title, text, title2){
     return newElementCol;
 }
 
-// add item to on menu
-function addOnMenuItem(title='Lorem Ipsum', text='Lorem Ipsum', title2='Lorem Ipsum'){
-    // get on-menu-items
-    let onMenuItems = document.querySelector('.on-menu-items');
-
-    // add a row if none exists
-    if(onMenuItems.children.length == 0){
-        let newElementRow = document.createElement('div');
-        newElementRow.className='row';
-        onMenuItems.appendChild(newElementRow);
-    }
-
-    // get the last row element
-    let lastElementRow = onMenuItems.children[onMenuItems.children.length - 1];
-    // console.log(lastElementRow);
-
-    // get the last row element's columns
-    let lastElementCols = lastElementRow.children;
-    // console.log(lastElementCols);
-
-    // if last row has 2 cols; create a new row and make it last row
-    if(lastElementCols.length == 2){
-        let newElementRow = document.createElement('div');
-        newElementRow.className = 'row';
-        onMenuItems.appendChild(newElementRow);
-    }
-
-    // get the new last row
-    lastElementRow = onMenuItems.children[onMenuItems.children.length - 1];
-
-    // create new element col
-    // add the col to the last row
-    lastElementRow.appendChild(createOnMenuItemElement(title, text, title2));
-
-    // attune card event listeners
-    attuneCardEventListeners()
-}
-
 // create an off menu item
-function createOffMenuItemElement(title, text, title2){
+function createOffMenuItemElement(id, img_src, title, text, title2){
     let newElementCard = document.createElement('div');
-    newElementCard.className = 'card mb-3 off-menu-item';
+    newElementCard.className = `card mb-3 off-menu-item id-${id}`;
     newElementCard.setAttribute('draggable', 'true');
+
     let newElementCardRow = document.createElement('div');
     newElementCardRow.className = 'row g-0';
+
     let newElementCardRowCol = document.createElement('div');
     newElementCardRowCol.className = 'col-md-4';
+
     let newElementCardRowColImg = document.createElement('img');
     newElementCardRowColImg.className = 'img-fluid rounded-start';
+    newElementCardRowColImg.setAttribute('src', img_src);
     newElementCardRowColImg.setAttribute('draggable', 'false');
+   
     let newElementCardRowCol2 = document.createElement('div');
     newElementCardRowCol2.className = 'col-md-8';
+    
     let newElementCardRowCol2Body = document.createElement('div');
     newElementCardRowCol2Body.className = 'card-body';
+   
     let newElementCardRowCol2BodyTitle = document.createElement('h5');
     newElementCardRowCol2BodyTitle.className = 'card-title';
     newElementCardRowCol2BodyTitle.textContent = title;
+  
     let newElementCardRowCol2BodyText = document.createElement('p');
     newElementCardRowCol2BodyText.className = 'card-text';
     newElementCardRowCol2BodyText.textContent = text;
+  
     let newElementCardRowCol2BodyTitle2 = document.createElement('h6');
     newElementCardRowCol2BodyTitle2.className = 'card-title';
     newElementCardRowCol2BodyTitle2.textContent = title2;
@@ -112,267 +95,349 @@ function createOffMenuItemElement(title, text, title2){
     return newElementCard
 }
 
-// add item to off menu
-function addOffMenuItem(title='Lorem Ipsum', text='Lorem Ipsum', title2='Lorem Ipsum'){
-    // get off-menu-items
-    let offMenuItems = document.querySelector('.off-menu-items');
+class OnMenuItems{
+    constructor(menuList, numCols=2){
+        this.menuList = menuList;
+        this.numCols = numCols;
 
-    // add off-menu-item element
-    offMenuItems.appendChild(createOffMenuItemElement(title, text, title2));
+        this.numRows = Math.ceil(this.menuList.length / this.numCols);
 
-    // attune card event listeners
-    attuneCardEventListeners()
-}
+        this.remainedCol = this.menuList.length % this.numCols;
+        if(this.remainedCol==0){this.remainedCol = this.numCols}
 
-// attune event listeners for on menu
-function attuneCardEventListeners(){
-    // get on-menu-items and off-menu-items
-    let onMenuItems = document.querySelector('.on-menu-items');
-    let offMenuItems = document.querySelector('.off-menu-items');
-
-    // get all cards
-    let allMenuItemCards = document.querySelectorAll('.card');
-    
-    // add event listeners to all cards
-    for(let i=0; i<allMenuItemCards.length; i++){
-
-        // if card has no event, add event
-        if(!(allMenuItemCards[i].classList.contains('has-event'))){
-            // dragstart event lsitener
-            allMenuItemCards[i].addEventListener('dragstart', function(e){
-                
-                // get the selected item
-                let selectedItem = e.target;
-
-                // prevent default dragover on-menu-items
-                onMenuItems.addEventListener('dragover', function(e){
-                    e.preventDefault();
-                });
-                // event listener drop on-menu-items
-                onMenuItems.addEventListener('drop', function(e){
-                    if(selectedItem == null){
-                        return;
-                    }
-                    // if selected card is an off-menu-item
-                    if(selectedItem.classList.contains('off-menu-item')){
-                        let selectedItemTitle = selectedItem.children[0].children[1].children[0].children[0].textContent;
-                        let selectedItemText = selectedItem.children[0].children[1].children[0].children[1].textContent;
-                        let selectedItemTitle2 = selectedItem.children[0].children[1].children[0].children[2].textContent;
-            
-                        console.log(selectedItemTitle)
-                        console.log(selectedItemText)
-                        console.log(selectedItemTitle2)
-
-                        addOnMenuItem(selectedItemTitle, selectedItemText, selectedItemTitle2)
-                        selectedItem = null;
-                    }
-                });
-
-                // prevent default dragover off-menu-items
-                offMenuItems.addEventListener('dragover', function(e){
-                    e.preventDefault();
-                });
-                // event listener drop off-menu-items
-                offMenuItems.addEventListener('drop', function(e){
-                    if(selectedItem == null){
-                        return;
-                    }
-                    // if selected card is an on-menu-item
-                    if(selectedItem.classList.contains('on-menu-item')){
-                        let selectedItemTitle = selectedItem.children[1].children[0].textContent;
-                        let selectedItemText = selectedItem.children[1].children[1].textContent;
-                        let selectedItemTitle2 = selectedItem.children[1].children[2].textContent;
-            
-                        console.log(selectedItemTitle)
-                        console.log(selectedItemText)
-                        console.log(selectedItemTitle2)
-
-                        addOffMenuItem(selectedItemTitle, selectedItemText, selectedItemTitle2)
-                        selectedItem = null;
-                    }
-                });
-            });
-        }
-
-        allMenuItemCards[i].classList.add('has-event')
+        this.onMenuItems = document.querySelector('.on-menu-items');
+        this.leftBox = document.querySelector('.left-box');
     }
 
+    setEventListeners(){
+        this.onMenuItems.addEventListener('dragstart', (e) => {
+            SELECTED_ELEMENT = e.target
+            e.target.classList.add("dragging");
+        })
 
-    // for(let i=0; i<onMenuItemCards.length; i++){
-    //     onMenuItemCards[i].addEventListener('dragstart', function(e){
-    //         let selectedItem = e.target;
+        this.leftBox.addEventListener('dragover', (e) => {
+            e.preventDefault()
+        })
 
-    //         offMenuItems.addEventListener('dragover', function(e){
-    //             e.preventDefault();
-    //             console.log('DRAG OVER OFF MENU');
-    //         })
-    //         offMenuItems.addEventListener('drop', function(e){
-    //             e.preventDefault();
-    //             console.log('DROP OFF MENU');
-    //         })
+        this.leftBox.addEventListener('dragend', (e) => {
+            e.target.classList.remove("dragging");
+        })
 
-    //         // console.log(selectedItem.children[1].children[0].textContent);
-    //     })
-    // }
+        this.leftBox.addEventListener('drop', (e) => {
+            // console.log('drop')
+            // console.log(SELECTED_ELEMENT)
+            // console.log(e.target)
+            if(SELECTED_ELEMENT.classList.contains('off-menu-item')){
+                console.log('DROPPING TO ON-MENU-ITEMS')
 
-    // console.log(onMenuItemCards);
-    // console.log(offMenuItemCards);
-    
+                let selectedId = SELECTED_ELEMENT.classList[3].slice(3)
+                let selectedImgSrc = SELECTED_ELEMENT.children[0].children[0].children[0].getAttribute('src')
+                let selectedTitle = SELECTED_ELEMENT.children[0].children[1].children[0].children[0].textContent
+                let selectedText = SELECTED_ELEMENT.children[0].children[1].children[0].children[1].textContent
+                let selectedTitle2 = SELECTED_ELEMENT.children[0].children[1].children[0].children[2].textContent
+
+                console.log('ID: ', selectedId)
+                console.log('ImgSrc: ', selectedImgSrc)
+                console.log('Title: ', selectedTitle)
+                console.log('Text: ', selectedText)
+                console.log('Title2: ', selectedTitle2)
+
+                this.addItem(selectedId, selectedImgSrc, selectedTitle, selectedText, selectedTitle2)
+                offMenuItems.removeItem(selectedId)
+            }
+        })
+    }
+
+    updateNumRowsRemainedCols(){
+        this.numRows = Math.ceil(this.menuList.length / this.numCols);
+
+        this.remainedCol = this.menuList.length % this.numCols;
+        if(this.remainedCol==0){this.remainedCol = this.numCols}
+    }
+
+    showMenuList(){ //experimental
+        let menuIdx = 0;        
+
+        for(let i=0; i<this.numRows; i++){
+            for(let j=0; j<this.remainedCol; j++){
+                console.log(this.menuList[menuIdx]['title']);
+                console.log(this.menuList[menuIdx]['text']);
+                console.log(this.menuList[menuIdx]['title2']);
+                menuIdx++;
+            }
+        }
+    }
+
+    buildOnMenuItems(){
+        let menuIdx = 0;        
+
+        for(let i=0; i<this.numRows; i++){
+            let newElementRow = document.createElement('div');
+            newElementRow.className = 'row'
+            this.onMenuItems.appendChild(newElementRow);
+
+            let cols = this.numCols;
+            if(i == this.numRows - 1){
+                cols = this.remainedCol;
+            }
+            for(let j=0; j<cols; j++){
+                console.log(menuIdx)
+                newElementRow.appendChild(createOnMenuItemElement(
+                    this.menuList[menuIdx]['id'],
+                    this.menuList[menuIdx]['img_src'],
+                    this.menuList[menuIdx]['title'],
+                    this.menuList[menuIdx]['text'],
+                    this.menuList[menuIdx]['title2']
+                    ));
+                menuIdx++;
+            }
+        }
+    }
+
+    // needs to be called before updateNumRowsRemainedCols() 
+    resetOnMenuItems(){
+        for(let i=this.numRows - 1; i>=0; i--) {
+            console.log(this.onMenuItems.children.length);
+            console.log(this.onMenuItems.children);
+            console.log(i);
+
+            this.onMenuItems.children[i].remove();
+        }
+    }
+
+    // resets, updates and builds
+    addItem(id, img_src, title, text, title2){
+        this.resetOnMenuItems()
+
+        let newMenu = {
+            'id': id,
+            'img_src': img_src,
+            'title': title,
+            'text': text,
+            'title2': title2
+        }
+        this.menuList.push(newMenu)
+        console.log(this.menuList)
+
+        this.updateNumRowsRemainedCols()
+        this.buildOnMenuItems()
+        NEXT_ID++;
+    }
+
+    //
+    removeItem(id){
+        let removeId = null;
+        for(let i=0; i<this.menuList.length; i++){
+            if(id == this.menuList[i]['id']){
+                removeId = id;
+                this.menuList.splice(i, 1);
+                break;
+            }
+        }
+
+        this.resetOnMenuItems()
+        this.updateNumRowsRemainedCols()
+        this.buildOnMenuItems()
+    }
+
 }
 
-//
-function moveOffMenuMoveItem(){
-    
+class OffMenuItems{
+    constructor(menuList){
+        this.menuList = menuList;
+        this.offMenuItems = document.querySelector('.off-menu-items');
+        this.rightBox = document.querySelector('.right-box');
+    }
+
+    setEventListeners(){
+        this.offMenuItems.addEventListener('dragstart', (e) => {
+            SELECTED_ELEMENT = e.target
+            e.target.classList.add("dragging");
+        })
+
+        this.rightBox.addEventListener('dragover', (e) => {
+            e.preventDefault()
+        })
+
+        this.rightBox.addEventListener('dragend', (e) => {
+            e.target.classList.remove("dragging");
+        })
+
+        this.rightBox.addEventListener('drop', (e) => {
+            // console.log('drop')
+            // console.log(SELECTED_ELEMENT)
+            // console.log(e.target)
+            if(SELECTED_ELEMENT.classList.contains('on-menu-item')){
+                console.log('DROPPING TO OFF-MENU-ITEMS')
+
+                let selectedId = SELECTED_ELEMENT.classList[2].slice(3)
+                let selectedImgSrc = SELECTED_ELEMENT.children[0].getAttribute('src')
+                let selectedTitle = SELECTED_ELEMENT.children[1].children[0].textContent
+                let selectedText = SELECTED_ELEMENT.children[1].children[1].textContent
+                let selectedTitle2 = SELECTED_ELEMENT.children[1].children[2].textContent
+
+                console.log('ID: ', selectedId)
+                console.log('ImgSrc: ', selectedImgSrc)
+                console.log('Title: ', selectedTitle)
+                console.log('Text: ', selectedText)
+                console.log('Title2: ', selectedTitle2)
+
+                this.addItem(selectedId, selectedImgSrc, selectedTitle, selectedText, selectedTitle2)
+                onMenuItems.removeItem(selectedId)
+            }
+        })
+    }
+
+    buildOffMenuItems(){
+        for(let i=0; i<this.menuList.length; i++){
+            this.offMenuItems.appendChild(createOffMenuItemElement(
+                this.menuList[i]['id'],
+                this.menuList[i]['img_src'],
+                this.menuList[i]['title'],
+                this.menuList[i]['text'],
+                this.menuList[i]['title2']
+                ));
+        }
+    }
+
+    // resets, updates and builds
+    addItem(id, img_src, title, text, title2){
+        this.resetOffMenuItems()
+
+        let newMenu = {
+            'id': id,
+            'img_src': img_src,
+            'title': title,
+            'text': text,
+            'title2': title2
+        }
+        this.menuList.push(newMenu)
+        console.log(this.menuList)
+
+        this.buildOffMenuItems()
+        NEXT_ID++;
+    }
+
+    resetOffMenuItems(){
+        for(let i=this.menuList.length - 1; i>=0; i--) {
+            console.log(this.offMenuItems.children.length);
+            console.log(this.offMenuItems.children);
+            console.log(i);
+
+            this.offMenuItems.children[i].remove();
+        }
+    }
+
+    removeItem(id){
+        this.resetOffMenuItems()
+
+        let removeId = null;
+        for(let i=0; i<this.menuList.length; i++){
+            if(id == this.menuList[i]['id']){
+                removeId = id;
+                this.menuList.splice(i, 1);
+                break;
+            }
+        }
+
+        this.buildOffMenuItems()
+    }
+
 }
 
-addOnMenuItem()
 
-addOffMenuItem()
-
-attuneCardEventListeners()
+// ================================
 
 
+let initialOnMenuItemList = [
+    {
+        'id': 0,
+        'img_src': 'images/hamburger.jpg',
+        'title': 'Xi Hamburger',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+    {
+        'id': 1,
+        'img_src': 'images/frenchfries.jpg',
+        'title': 'Xi French Fries',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+    {
+        'id': 2,
+        'img_src': 'images/currypasta.jpeg',
+        'title': 'Xi Curry Pasta',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+    {
+        'id': 3,
+        'img_src': 'images/alfredopasta.png',
+        'title': 'Xi Alfredo Pasta',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+]
 
-// function attuneEventListeners(){
-//     let leftItemList = document.querySelector('.menu-chosen-items-box');
-//     let rightItemList = document.querySelector('.menu-items-box');
-//     let items = document.querySelectorAll('.menu-list-item');
+let initialOffMenuItemList = [
+    {
+        'id': 4,
+        'img_src': 'images/coke.jpg',
+        'title': 'Xi Coke',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+    {
+        'id': 5,
+        'img_src': 'images/lemonade.jpg',
+        'title': 'Xi Lemonade',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+    {
+        'id': 6,
+        'img_src': 'images/water.jpg',
+        'title': 'Xi Water',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+    {
+        'id': 7,
+        'img_src': 'images/nuggets.jpg',
+        'title': 'Xi Nuggets',
+        'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'title2': '19.99'
+    },
+]
 
-//     for (let item of items) {
-//         item.addEventListener('dragstart', function(e){
-//             let selectedItem = e.target;
-            
-//             while (selectedItem.tagName != 'LI'){
-//                 selectedItem = selectedItem.parentElement;
-//             }
-    
-//             console.log(selectedItem)
-    
-//             leftItemList.addEventListener('dragover', function(e){
-//                 e.preventDefault();
-//             });
-//             leftItemList.addEventListener('drop', function(e){
-//                 if (selectedItem != null){
-//                     leftItemList.append(selectedItem);
-//                 }
-//                 selectedItem = null;
-//             });
-    
-//             rightItemList.addEventListener('dragover', function(e){
-//                 e.preventDefault();
-//             });
-//             rightItemList.addEventListener('drop', function(e){
-//                 if (selectedItem != null){
-//                     rightItemList.append(selectedItem);
-//                 }
-//                 selectedItem = null;
-//             });
-//         })
-//     }
-// }
+let NEXT_ID = initialOnMenuItemList.length + initialOffMenuItemList.length
+let SELECTED_ELEMENT = null
 
-// function addItemPopup(){
-//     let popup = document.querySelector('.add-item-popup');
-//     popup.classList.add('add-item-popup-open');
-//     popup.classList.remove('add-item-popup-close');
-// }
+let onMenuItems = new OnMenuItems(initialOnMenuItemList)
+let offMenuItems = new OffMenuItems(initialOffMenuItemList)
 
-// function addItem(){
-//     let name = document.getElementById('menu-name-input');
-//     let price = document.getElementById('menu-price-input');
-//     let img = document.getElementById('menu-image-input');
+onMenuItems.setEventListeners()
+offMenuItems.setEventListeners()
 
-//     console.log(name.value, price.value)
+onMenuItems.buildOnMenuItems()
+offMenuItems.buildOffMenuItems()
 
-//     let newItem = document.createElement('li');
-//     newItem.classList.add('menu-list-item')
-//     newItem.setAttribute('draggable', true)
+offMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 5', 'test add func', '44.55')
+// offMenuItems.removeItem(7)
 
-//     let newItemDiv = document.createElement('div')
-//     newItemDiv.classList.add('details')
-    
-//     let newItemSpanName = document.createElement('span')
-//     newItemSpanName.textContent = name.value
-//     newItemSpanName.classList.add('details-name')
-
-//     newItemSpanPrice = document.createElement('span')
-//     newItemSpanPrice.textContent = price.value + "₺"
-//     newItemSpanPrice.classList.add('details-price')
-
-//     let newItemImg = document.createElement('img');
-//     newItemImg.classList.add('details-image')
-//     newItemImg.src = URL.createObjectURL(img.files[0])
-        
-//     let newItemIcon = document.createElement('div')
-//     newItemIcon.classList.add('i')
-//     newItemIcon.classList.add('uil')
-//     newItemIcon.classList.add('uil-draggabledots')
-
-//     let newItemRemove = document.createElement('button')
-//     newItemRemove.classList.add('remove')
-//     newItemRemove.setAttribute('id', 'remove')
-//     newItemRemove.setAttribute('onclick', 'removeItem(event)')
-//     newItemRemove.textContent = 'X'
+// onMenuItems.removeItem(1)
+// onMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 2', 'test add func', '44.55')
+// onMenuItems.removeItem(5)
+// onMenuItems.removeItem(7)
+// onMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 3', 'test add func', '44.55')
+// onMenuItems.removeItem(2)
+// onMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 4', 'test add func', '44.55')
+// onMenuItems.removeItem(9)
+// onMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 5', 'test add func', '44.55')
 
 
-//     newItemDiv.appendChild(newItemImg)
-//     newItemDiv.appendChild(newItemSpanName)
-//     newItemDiv.appendChild(newItemSpanPrice)
-//     newItemDiv.appendChild(newItemIcon)
-//     newItemDiv.appendChild(newItemRemove)
+// onMenuItems.resetOnMenuItems()
 
-    
-//     newItem.appendChild(newItemDiv)
-    
-//     let rightItemList = document.querySelector('.menu-items-box');
-//     rightItemList.append(newItem)
-
-//     console.log(newItem)
-
-//     let popup = document.querySelector('.add-item-popup');
-//     popup.classList.remove('add-item-popup-open');
-//     popup.classList.add('add-item-popup-close');
-
-//     attuneEventListeners()
-// }
-
-// function removeItem(e){
-//     selectedItem = e.target
-//     grandParent = selectedItem.parentElement.parentElement
-//     grandParent.remove()
-// }
-
-// function getFile() {
-//     document.getElementById("upfile").click();
-// }
-  
-// function sub(obj) {
-//     var file = obj.value;
-//     var fileName = file.split("\\");
-//     document.getElementById("menu-image-input").innerHTML = fileName[fileName.length - 1];
-//     document.myForm.submit();
-//     e.preventDefault();
-// }
-
-// function attuneListByTopic(){
-//     let items = document.querySelectorAll('.menu-list-item');
-//     let selectedTopic = document.getElementById('topics');
-
-//     for (let i = 0; i < items.length; i++) {
-//         if(items[i].classList.contains(selectedTopic.value) || selectedTopic.value == 'all'){
-//             if(items[i].classList.contains('hide-by-topic')){
-//                 items[i].classList.remove('hide-by-topic')
-//             }
-//             continue
-//         }
-//         items[i].classList.add('hide-by-topic')
-//     }
-// }
-
-// attuneEventListeners()
-
-// // document.addEventListener('click', function(e) {
-// //     e = e || window.event;
-// //     var target = e.target
-// //     console.log(target)
-// // }, false);
+// onMenuItems.showMenuList()
+// onMenuItems.resetOnMenuItems()
