@@ -109,6 +109,10 @@ class OnMenuItems{
         this.leftBox = document.querySelector('.left-box');
     }
 
+    autoScrollDown(){
+        this.leftBox.scrollTop = this.leftBox.scrollHeight
+    }
+
     setEventListeners(){
         this.onMenuItems.addEventListener('dragstart', (e) => {
             SELECTED_ELEMENT = e.target
@@ -221,6 +225,7 @@ class OnMenuItems{
 
         this.updateNumRowsRemainedCols()
         this.buildOnMenuItems()
+        this.autoScrollDown()
         NEXT_ID++;
     }
 
@@ -288,6 +293,10 @@ class OffMenuItems{
         })
     }
 
+    autoScrollDown(){
+        this.rightBox.scrollTop = this.rightBox.scrollHeight
+    }
+
     buildOffMenuItems(){
         for(let i=0; i<this.menuList.length; i++){
             this.offMenuItems.appendChild(createOffMenuItemElement(
@@ -315,6 +324,7 @@ class OffMenuItems{
         console.log(this.menuList)
 
         this.buildOffMenuItems()
+        this.autoScrollDown()
         NEXT_ID++;
     }
 
