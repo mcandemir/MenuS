@@ -1,12 +1,20 @@
+/*
+CARD CLASSES INDEXES: 
+    [0] -> CARD CLASS
+    [1] -> MENU IDENTIFIER
+    [2] -> ID
+    [3] -> TOPIC
+*/
+
 // create an on menu item
-function createOnMenuItemElement(id, img_src, title, text, title2){
+function createOnMenuItemElement(id, img_src, title, text, title2, topic){
     // create a column cardboard on-menu-item
     let newElementCol = document.createElement('div');
     newElementCol.className = 'col';
     // newElementCol.setAttribute('draggable', 'false');
 
     let newElementColCard = document.createElement('div');
-    newElementColCard.className = `card on-menu-item id-${id}`;
+    newElementColCard.className = `card on-menu-item id-${id} ${topic}`;
     newElementColCard.setAttribute('draggable', 'true');
     
     let newElementColCardImg = document.createElement('img');
@@ -46,9 +54,9 @@ function createOnMenuItemElement(id, img_src, title, text, title2){
 }
 
 // create an off menu item
-function createOffMenuItemElement(id, img_src, title, text, title2){
+function createOffMenuItemElement(id, img_src, title, text, title2, topic){
     let newElementCard = document.createElement('div');
-    newElementCard.className = `card off-menu-item id-${id}`;
+    newElementCard.className = `card off-menu-item id-${id} ${topic}`;
     newElementCard.setAttribute('draggable', 'true');
 
     let newElementCardRow = document.createElement('div');
@@ -95,6 +103,30 @@ function createOffMenuItemElement(id, img_src, title, text, title2){
     return newElementCard
 }
 
+// show cards only with selected topics
+function filterDisplayListByTopic(displayList){
+    let displayListCopy = []
+    let selectedTopicElement = document.querySelector('.form-select.topic')
+
+    for(let i=0; i<displayList.length; i++){
+        if(selectedTopicElement.value == 'all'){
+            displayListCopy.push(displayList[i])
+        }
+        else{
+            if(displayList[i]['topic'] == selectedTopicElement.value){
+                displayListCopy.push(displayList[i])
+            }
+        }
+    }
+
+    return displayListCopy;
+}
+
+function refreshBoth(){
+    onMenuItems.refresh()
+    offMenuItems.refresh()
+}
+
 class OnMenuItems{
     constructor(menuList, numCols=2){
         this.menuList = menuList;
@@ -139,14 +171,16 @@ class OnMenuItems{
                 let selectedTitle = SELECTED_ELEMENT.children[0].children[1].children[0].children[0].textContent
                 let selectedText = SELECTED_ELEMENT.children[0].children[1].children[0].children[1].textContent
                 let selectedTitle2 = SELECTED_ELEMENT.children[0].children[1].children[0].children[2].textContent
+                let selectedTopic = SELECTED_ELEMENT.classList[3]
 
                 console.log('ID: ', selectedId)
                 console.log('ImgSrc: ', selectedImgSrc)
                 console.log('Title: ', selectedTitle)
                 console.log('Text: ', selectedText)
                 console.log('Title2: ', selectedTitle2)
+                console.log('Topic: ', selectedTopic)
 
-                this.addItem(selectedId, selectedImgSrc, selectedTitle, selectedText, selectedTitle2)
+                this.addItem(selectedId, selectedImgSrc, selectedTitle, selectedText, selectedTitle2, selectedTopic)
                 offMenuItems.removeItem(selectedId)
             }
         })
@@ -172,26 +206,35 @@ class OnMenuItems{
         }
     }
 
-    buildOnMenuItems(){
-        let menuIdx = 0;        
+    buildOnMenuItems(displayList=this.menuList){
+        displayList = filterDisplayListByTopic(displayList)
 
-        for(let i=0; i<this.numRows; i++){
+        console.log(displayList)
+
+        let menuIdx = 0;        
+        let displayListNumRows = Math.ceil(displayList.length / this.numCols)
+        
+        let displayListRemainedCol = displayList.length % this.numCols;
+            if(displayListRemainedCol==0){displayListRemainedCol = this.numCols}
+
+        for(let i=0; i<(displayListNumRows); i++){
             let newElementRow = document.createElement('div');
             newElementRow.className = 'row'
             this.onMenuItems.appendChild(newElementRow);
-
+            
             let cols = this.numCols;
-            if(i == this.numRows - 1){
-                cols = this.remainedCol;
+            if(i == displayListNumRows - 1){
+                cols = displayListRemainedCol;
             }
+
             for(let j=0; j<cols; j++){
-                console.log(menuIdx)
                 newElementRow.appendChild(createOnMenuItemElement(
-                    this.menuList[menuIdx]['id'],
-                    this.menuList[menuIdx]['img_src'],
-                    this.menuList[menuIdx]['title'],
-                    this.menuList[menuIdx]['text'],
-                    this.menuList[menuIdx]['title2']
+                    displayList[menuIdx]['id'],
+                    displayList[menuIdx]['img_src'],
+                    displayList[menuIdx]['title'],
+                    displayList[menuIdx]['text'],
+                    displayList[menuIdx]['title2'],
+                    displayList[menuIdx]['topic']
                     ));
                 menuIdx++;
             }
@@ -200,17 +243,16 @@ class OnMenuItems{
 
     // needs to be called before updateNumRowsRemainedCols() 
     resetOnMenuItems(){
+        console.log('Resetting Menu Items')
         for(let i=this.numRows - 1; i>=0; i--) {
-            console.log(this.onMenuItems.children.length);
-            console.log(this.onMenuItems.children);
-            console.log(i);
-
-            this.onMenuItems.children[i].remove();
+            if(this.onMenuItems.children[i]){
+                this.onMenuItems.children[i].remove();
+            }
         }
     }
 
     // resets, updates and builds
-    addItem(id, img_src, title, text, title2){
+    addItem(id, img_src, title, text, title2, topic){
         this.resetOnMenuItems()
 
         let newMenu = {
@@ -218,10 +260,11 @@ class OnMenuItems{
             'img_src': img_src,
             'title': title,
             'text': text,
-            'title2': title2
+            'title2': title2,
+            'topic': topic
         }
         this.menuList.push(newMenu)
-        console.log(this.menuList)
+        console.log('Adding Menu: ', newMenu)
 
         this.updateNumRowsRemainedCols()
         this.buildOnMenuItems()
@@ -240,6 +283,11 @@ class OnMenuItems{
 
         this.resetOnMenuItems()
         this.updateNumRowsRemainedCols()
+        this.buildOnMenuItems()
+    }
+
+    refresh(){
+        this.resetOnMenuItems()
         this.buildOnMenuItems()
     }
 
@@ -278,14 +326,16 @@ class OffMenuItems{
                 let selectedTitle = SELECTED_ELEMENT.children[1].children[0].textContent
                 let selectedText = SELECTED_ELEMENT.children[1].children[1].textContent
                 let selectedTitle2 = SELECTED_ELEMENT.children[1].children[2].textContent
+                let selectedTopic = SELECTED_ELEMENT.classList[3]
 
                 console.log('ID: ', selectedId)
                 console.log('ImgSrc: ', selectedImgSrc)
                 console.log('Title: ', selectedTitle)
                 console.log('Text: ', selectedText)
                 console.log('Title2: ', selectedTitle2)
+                console.log('Topic: ', selectedTopic)
 
-                this.addItem(selectedId, selectedImgSrc, selectedTitle, selectedText, selectedTitle2)
+                this.addItem(selectedId, selectedImgSrc, selectedTitle, selectedText, selectedTitle2, selectedTopic)
                 onMenuItems.removeItem(selectedId)
             }
         })
@@ -295,20 +345,22 @@ class OffMenuItems{
         this.rightBox.scrollTop = this.rightBox.scrollHeight
     }
 
-    buildOffMenuItems(){
-        for(let i=0; i<this.menuList.length; i++){
+    buildOffMenuItems(displayList=this.menuList){
+        displayList = filterDisplayListByTopic(displayList)
+        for(let i=0; i<displayList.length; i++){
             this.offMenuItems.appendChild(createOffMenuItemElement(
-                this.menuList[i]['id'],
-                this.menuList[i]['img_src'],
-                this.menuList[i]['title'],
-                this.menuList[i]['text'],
-                this.menuList[i]['title2']
+                displayList[i]['id'],
+                displayList[i]['img_src'],
+                displayList[i]['title'],
+                displayList[i]['text'],
+                displayList[i]['title2'],
+                displayList[i]['topic']
                 ));
         }
     }
 
     // resets, updates and builds
-    addItem(id, img_src, title, text, title2){
+    addItem(id, img_src, title, text, title2, topic){
         this.resetOffMenuItems()
 
         let newMenu = {
@@ -316,10 +368,11 @@ class OffMenuItems{
             'img_src': img_src,
             'title': title,
             'text': text,
-            'title2': title2
+            'title2': title2,
+            'topic': topic,
         }
         this.menuList.push(newMenu)
-        console.log(this.menuList)
+        console.log('Adding Menu: ', newMenu)
 
         this.buildOffMenuItems()
         this.autoScrollDown()
@@ -327,12 +380,11 @@ class OffMenuItems{
     }
 
     resetOffMenuItems(){
+        console.log('Resetting Menu Items')
         for(let i=this.menuList.length - 1; i>=0; i--) {
-            console.log(this.offMenuItems.children.length);
-            console.log(this.offMenuItems.children);
-            console.log(i);
-
-            this.offMenuItems.children[i].remove();
+            if(this.offMenuItems.children[i]){
+                this.offMenuItems.children[i].remove();
+            }
         }
     }
 
@@ -348,6 +400,11 @@ class OffMenuItems{
         this.buildOffMenuItems()
     }
 
+    refresh(){
+        this.resetOffMenuItems()
+        this.buildOffMenuItems()
+    }
+
 }
 
 
@@ -360,28 +417,32 @@ let initialOnMenuItemList = [
         'img_src': 'images/hamburger.jpg',
         'title': 'Xi Hamburger',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '19.99',
+        'topic': 'topic-fast-food'
     },
     {
         'id': 1,
         'img_src': 'images/frenchfries.jpg',
         'title': 'Xi French Fries',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '24.99',
+        'topic': 'topic-fast-food'
     },
     {
         'id': 2,
         'img_src': 'images/currypasta.jpeg',
         'title': 'Xi Curry Pasta',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '29.99',
+        'topic': 'topic-pasta'
     },
     {
         'id': 3,
         'img_src': 'images/alfredopasta.png',
         'title': 'Xi Alfredo Pasta',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '14.99',
+        'topic': 'topic-pasta'
     },
 ]
 
@@ -391,28 +452,32 @@ let initialOffMenuItemList = [
         'img_src': 'images/coke.jpg',
         'title': 'Xi Coke',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '10.99',
+        'topic': 'topic-cold-drinks'
     },
     {
         'id': 5,
         'img_src': 'images/lemonade.jpg',
         'title': 'Xi Lemonade',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '15.99',
+        'topic': 'topic-cold-drinks'
     },
     {
         'id': 6,
         'img_src': 'images/water.jpg',
         'title': 'Xi Water',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '17.99',
+        'topic': 'topic-cold-drinks'
     },
     {
         'id': 7,
         'img_src': 'images/nuggets.jpg',
         'title': 'Xi Nuggets',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99'
+        'title2': '18.99',
+        'topic': 'topic-fast-food'
     },
 ]
 
@@ -428,7 +493,9 @@ offMenuItems.setEventListeners()
 onMenuItems.buildOnMenuItems()
 offMenuItems.buildOffMenuItems()
 
-offMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 5', 'test add func', '44.55')
+offMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 5', 'test add func', '44.55', 'topic-fast-food')
+
+
 // offMenuItems.removeItem(7)
 
 // onMenuItems.removeItem(1)

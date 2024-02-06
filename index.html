@@ -19,15 +19,22 @@
     
     <div class="container-xxl option-box">
         <div class="container-xxl option-box-left">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>All</option>
-                <option value="cold-drinks">Cold Drinks</option>
-                <option value="fast-food">Fast-Food</option>
-                <option value="aperative">Aperitive</option>
+            <select class="form-select topic" aria-label="Default select example" onchange="refreshBoth()">
+                <option value="all" >All</option>
+                <option value="topic-cold-drinks">Cold Drinks</option>
+                <option value="topic-fast-food">Fast-Food</option>
+                <option value="topic-pasta">Pasta</option>
             </select>
+
+            <select class="form-select sort" aria-label="Default select example">
+                <option disabled selected>Sort By</option>
+                <option value="name">Name</option>
+                <option value="price">Price</option>
+            </select>
+
         </div>
         <div class="container-xxl option-box-right">
-
+            <button class="btn btn-warning" type="button">Add Item</button>
         </div>
     </div>
     <!-- MAIN BOX -->
