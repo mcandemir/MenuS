@@ -103,7 +103,7 @@ function createOffMenuItemElement(id, img_src, title, text, title2, topic){
     return newElementCard
 }
 
-// show cards only with selected topics
+// return a copy of a menu list filtered with topic 
 function filterDisplayListByTopic(displayList){
     let displayListCopy = []
     let selectedTopicElement = document.querySelector('.form-select.topic')
@@ -122,10 +122,32 @@ function filterDisplayListByTopic(displayList){
     return displayListCopy;
 }
 
+// clear and reload both on/off-menus-items
 function refreshBoth(){
     onMenuItems.refresh()
     offMenuItems.refresh()
 }
+
+// add item within the form
+function addItemPopUp(){
+    popupBox = document.querySelector('.add-item-popup-box')
+    containerDiv = document.querySelector('.container')
+
+    popupBox.classList.remove('hidden')
+    containerDiv.classList.add('blackout')
+}
+
+function closePopUp(){
+    popupBox = document.querySelector('.add-item-popup-box')
+    containerDiv = document.querySelector('.container')
+
+    popupBox.classList.add('hidden')
+    containerDiv.classList.remove('blackout')
+
+    offMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', `Xi Nuggets ${NEXT_ID}`, 'test add func', '44.55', 'topic-fast-food')
+}
+
+
 
 class OnMenuItems{
     constructor(menuList, numCols=2){

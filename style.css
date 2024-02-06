@@ -170,9 +170,50 @@ body{
     object-fit: cover;
 }
 
-/* .card .mb-3{
-    height: 10px;
-} */
+/*=====*/
+/*POPUP*/
+/*=====*/
+
+.add-item-popup-box{
+    height: 80vh;
+    width: 60vh;
+    left: 50%;
+    transform: translate(-50%, -110%);
+    position: fixed;
+    padding: 0px;
+    border: 1px solid greenyellow;
+}
+
+.add-item-popup{
+    height: 100%;
+    width: 100%;
+    border: 1px solid cyan;
+    background: #0f0f0f;
+    display: flex;
+}
+
+.add-item-popup .inputs-box{
+    height: 100%;
+    width: 100%;
+    border: 1px solid red;
+    text-align: center;
+    /* display: inline; */
+}
+
+.add-item-popup .inputs-box .input{
+    margin: 4vh;
+    height: 5vh;
+    width: 60%;
+    /* background-color: aqua; */
+}
+
+.hidden{
+    display: none;
+}
+
+.blackout{
+    opacity: 0.3;
+}
 
 /*=====*/
 /*OTHER*/
