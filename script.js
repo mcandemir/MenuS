@@ -48,7 +48,7 @@ function createOnMenuItemElement(id, img_src, title, text, title2){
 // create an off menu item
 function createOffMenuItemElement(id, img_src, title, text, title2){
     let newElementCard = document.createElement('div');
-    newElementCard.className = `card mb-3 off-menu-item id-${id}`;
+    newElementCard.className = `card off-menu-item id-${id}`;
     newElementCard.setAttribute('draggable', 'true');
 
     let newElementCardRow = document.createElement('div');
@@ -134,7 +134,7 @@ class OnMenuItems{
             if(SELECTED_ELEMENT.classList.contains('off-menu-item')){
                 console.log('DROPPING TO ON-MENU-ITEMS')
 
-                let selectedId = SELECTED_ELEMENT.classList[3].slice(3)
+                let selectedId = SELECTED_ELEMENT.classList[2].slice(3)
                 let selectedImgSrc = SELECTED_ELEMENT.children[0].children[0].children[0].getAttribute('src')
                 let selectedTitle = SELECTED_ELEMENT.children[0].children[1].children[0].children[0].textContent
                 let selectedText = SELECTED_ELEMENT.children[0].children[1].children[0].children[1].textContent
@@ -231,10 +231,8 @@ class OnMenuItems{
 
     //
     removeItem(id){
-        let removeId = null;
         for(let i=0; i<this.menuList.length; i++){
             if(id == this.menuList[i]['id']){
-                removeId = id;
                 this.menuList.splice(i, 1);
                 break;
             }
@@ -340,11 +338,8 @@ class OffMenuItems{
 
     removeItem(id){
         this.resetOffMenuItems()
-
-        let removeId = null;
         for(let i=0; i<this.menuList.length; i++){
             if(id == this.menuList[i]['id']){
-                removeId = id;
                 this.menuList.splice(i, 1);
                 break;
             }
