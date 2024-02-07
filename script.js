@@ -138,13 +138,19 @@ function addItemPopUp(){
 }
 
 function closePopUp(){
-    popupBox = document.querySelector('.add-item-popup-box')
-    containerDiv = document.querySelector('.container')
+    let newItemTitle = document.querySelector('.input-title').value;
+    let newItemText = document.querySelector('.input-text').value;
+    let newItemTitle2 = document.querySelector('.input-title2').value;
+    let newItemTopic = document.querySelector('.input-topic').value;
+    let newItemImgSrc = document.querySelector('#input-img').value;
 
-    popupBox.classList.add('hidden')
-    containerDiv.classList.remove('blackout')
+    let popupBox = document.querySelector('.add-item-popup-box');
+    let containerDiv = document.querySelector('.container');
 
-    offMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', `Xi Nuggets ${NEXT_ID}`, 'test add func', '44.55', 'topic-fast-food')
+    popupBox.classList.add('hidden');
+    containerDiv.classList.remove('blackout');
+
+    offMenuItems.addItem(NEXT_ID, 'images/hamburger.jpg', `${newItemTitle} ${NEXT_ID}`, `${newItemText}`, `${newItemTitle2} ₺`, `topic-${newItemTopic}`);
     NEXT_ID++;
 }
 
@@ -438,7 +444,7 @@ let initialOnMenuItemList = [
         'img_src': 'images/hamburger.jpg',
         'title': 'Xi Hamburger',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '19.99',
+        'title2': '19.99 ₺',
         'topic': 'topic-fast-food'
     },
     {
@@ -446,7 +452,7 @@ let initialOnMenuItemList = [
         'img_src': 'images/frenchfries.jpg',
         'title': 'Xi French Fries',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '24.99',
+        'title2': '24.99 ₺',
         'topic': 'topic-fast-food'
     },
     {
@@ -454,7 +460,7 @@ let initialOnMenuItemList = [
         'img_src': 'images/currypasta.jpeg',
         'title': 'Xi Curry Pasta',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '29.99',
+        'title2': '29.99 ₺',
         'topic': 'topic-pasta'
     },
     {
@@ -462,7 +468,7 @@ let initialOnMenuItemList = [
         'img_src': 'images/alfredopasta.png',
         'title': 'Xi Alfredo Pasta',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '14.99',
+        'title2': '14.99 ₺',
         'topic': 'topic-pasta'
     },
 ]
@@ -473,7 +479,7 @@ let initialOffMenuItemList = [
         'img_src': 'images/coke.jpg',
         'title': 'Xi Coke',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '10.99',
+        'title2': '10.99 ₺',
         'topic': 'topic-cold-drinks'
     },
     {
@@ -481,7 +487,7 @@ let initialOffMenuItemList = [
         'img_src': 'images/lemonade.jpg',
         'title': 'Xi Lemonade',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '15.99',
+        'title2': '15.99 ₺',
         'topic': 'topic-cold-drinks'
     },
     {
@@ -489,7 +495,7 @@ let initialOffMenuItemList = [
         'img_src': 'images/water.jpg',
         'title': 'Xi Water',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '17.99',
+        'title2': '17.99 ₺',
         'topic': 'topic-cold-drinks'
     },
     {
@@ -497,7 +503,7 @@ let initialOffMenuItemList = [
         'img_src': 'images/nuggets.jpg',
         'title': 'Xi Nuggets',
         'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'title2': '18.99',
+        'title2': '18.99 ₺',
         'topic': 'topic-fast-food'
     },
 ]
@@ -513,8 +519,6 @@ offMenuItems.setEventListeners()
 
 onMenuItems.buildOnMenuItems()
 offMenuItems.buildOffMenuItems()
-
-offMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', 'Xi Nuggets 5', 'test add func', '44.55', 'topic-fast-food')
 
 
 // offMenuItems.removeItem(7)

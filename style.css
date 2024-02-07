@@ -8,13 +8,13 @@
 
 body{
     background: #2a2a2a;
+    font-family: 'Poppins', sans-serif;
 }
 
 .title{
     margin-top: 1.5rem;
     color: #fff;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
     /* border: 1px solid #ff5b5b; */
 }
 
@@ -82,7 +82,6 @@ body{
     border-radius: 12px;
     margin-top: 5px;
     font-size: 18px;
-    font-family: 'Poppins', sans-serif;
     /* color: #fff;
     background: #202020; */
     /* cursor: pointer; */
@@ -181,31 +180,162 @@ body{
     transform: translate(-50%, -110%);
     position: fixed;
     padding: 0px;
-    border: 1px solid greenyellow;
+    /* border: 1px solid greenyellow; */
 }
 
 .add-item-popup{
     height: 100%;
     width: 100%;
-    border: 1px solid cyan;
+    /* border: 1px solid cyan; */
     background: #0f0f0f;
     display: flex;
+    padding: 20px;
+    border-radius: 15px;
 }
 
 .add-item-popup .inputs-box{
     height: 100%;
     width: 100%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     text-align: center;
-    /* display: inline; */
 }
 
-.add-item-popup .inputs-box .input{
-    margin: 4vh;
-    height: 5vh;
-    width: 60%;
-    /* background-color: aqua; */
+.input-title-box,
+.input-text-box,
+.input-title2-box,
+.input-topic-box{
+    /* border: 1px solid yellow; */
+    display: flex;
 }
+
+.input-img-box{
+    /* border: 1px solid yellow; */
+    height: 25vh;
+    /* display: flex;   */
+}
+
+.input-title-label, 
+.input-text-label,
+.input-title2-label,
+.input-topic-label{
+    margin: 10px;
+    height: 5vh;
+    width: 30%;
+    color: #fff;
+    font-size: 3vh;
+    padding: 0px;
+    /* border: 1px dotted aqua; */
+}
+
+.input-img-label{
+    /* margin: 10px; */
+    height: 15%;
+    width: 100%;
+    color: #fff;
+    font-size: 3vh;
+    padding: 0px;
+    /* border: 1px dotted aqua; */
+}
+
+.input-title, 
+.input-text,
+.input-title2,
+.input-topic{
+    margin: 10px;
+    padding: 10px;
+    height: 5vh;
+    width: 100%;
+    color: #fff;
+    font-size: 3vh;
+    background-color: transparent;
+    border: 1px solid rgb(243, 243, 243);
+    outline: none;
+    box-shadow: none;
+    transition: 0.5s;
+}
+
+.input-img-box label{
+    width: 40%;
+    height: 80%;
+    color: #fff;
+    transition: 0.3s;
+    display: inline-block;
+    background-color: transparent;
+    background: url('resources/images/new-item-button.png');
+    background-size: 30%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.input-img-box .input-group{
+    width: 70%;
+    margin: auto;
+    cursor: pointer;
+}
+
+.input-image-preview{
+    padding: 15px;
+    width: 100%;
+    /* border: 1px dashed pink; */
+}
+
+.input-img-box img{
+    width: 30%;
+    object-fit: cover;
+}
+
+.input-title:focus, 
+.input-text:focus,
+.input-title2:focus,
+.input-topic:focus,
+.input-group input:focus{
+    border: 1px solid rgb(255, 123, 0);
+    box-shadow: 0px 0px 15px 0px orange;
+    transition: 0.5s;
+}
+
+
+
+
+.input-button-box{
+    width: 100%;
+    height: 12.5vh;
+}
+
+.input-button-box .input-button{
+    width: 75%;
+    height: 60%;
+    border-radius: 15px;
+    font-size: 3vh;
+    background-color: orange;
+    color: black;
+    border-color: orange;
+}
+
+.input-button-box .input-button:hover{
+    transform: scale(102%);
+    box-shadow: 0px 0px 10px 0px orange;
+    transition: 0.5s;
+}
+
+.input-button-box .input-cancel-button{
+    margin-top: 15px;
+    width: 75%;
+    height: 30%;
+    border-radius: 15px;
+    font-size: 2vh;
+    background-color: rgb(241, 54, 79);
+    color: #fff;
+    border-color: rgb(241, 54, 79);
+}
+
+.input-button-box .input-cancel-button:hover{
+    transform: scale(102%);
+    box-shadow: 0px 0px 10px 0px rgb(241, 54, 79);
+    transition: 0.5s;
+}
+
+
 
 .hidden{
     display: none;
@@ -213,6 +343,7 @@ body{
 
 .blackout{
     opacity: 0.3;
+    transition: 0.5s;
 }
 
 /*=====*/
@@ -222,3 +353,14 @@ body{
 .dragging{
     opacity: 0.5;
 }
+
+.inputs-box hr{
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    /* color: #ff811b; */
+    /* background: aqua; */
+    border: 1px solid rgb(255, 146, 4);
+    border-radius: 30px;
+    opacity: 1;
+}
+
