@@ -137,21 +137,23 @@ function addItemPopUp(){
     containerDiv.classList.add('blackout')
 }
 
-function closePopUp(){
-    let newItemTitle = document.querySelector('.input-title').value;
-    let newItemText = document.querySelector('.input-text').value;
-    let newItemTitle2 = document.querySelector('.input-title2').value;
-    let newItemTopic = document.querySelector('.input-topic').value;
-    let newItemImgSrc = document.querySelector('#input-img').value;
+function closePopUp(add=false){
+    if(add){
+        let newItemTitle = document.querySelector('.input-title').value;
+        let newItemText = document.querySelector('.input-text').value;
+        let newItemTitle2 = document.querySelector('.input-title2').value;
+        let newItemTopic = document.querySelector('.input-topic').value;
+        let newItemImgSrc = document.querySelector('#input-img').value;
+    
+        offMenuItems.addItem(NEXT_ID, 'images/hamburger.jpg', `${newItemTitle} ${NEXT_ID}`, `${newItemText}`, `${newItemTitle2} ₺`, `topic-${newItemTopic}`);
+        NEXT_ID++;
+    }
 
     let popupBox = document.querySelector('.add-item-popup-box');
     let containerDiv = document.querySelector('.container');
 
     popupBox.classList.add('hidden');
     containerDiv.classList.remove('blackout');
-
-    offMenuItems.addItem(NEXT_ID, 'images/hamburger.jpg', `${newItemTitle} ${NEXT_ID}`, `${newItemText}`, `${newItemTitle2} ₺`, `topic-${newItemTopic}`);
-    NEXT_ID++;
 }
 
 
