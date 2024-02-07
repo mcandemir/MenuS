@@ -145,6 +145,7 @@ function closePopUp(){
     containerDiv.classList.remove('blackout')
 
     offMenuItems.addItem(NEXT_ID, 'images/nuggets.jpg', `Xi Nuggets ${NEXT_ID}`, 'test add func', '44.55', 'topic-fast-food')
+    NEXT_ID++;
 }
 
 
@@ -291,7 +292,6 @@ class OnMenuItems{
         this.updateNumRowsRemainedCols()
         this.buildOnMenuItems()
         this.autoScrollDown()
-        NEXT_ID++;
     }
 
     //
@@ -398,7 +398,6 @@ class OffMenuItems{
 
         this.buildOffMenuItems()
         this.autoScrollDown()
-        NEXT_ID++;
     }
 
     resetOffMenuItems(){
