@@ -70,12 +70,15 @@ body{
     height: 80%;
     border-radius: 12px;
     margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
     /* color: #fff;
     background: #202020; */
     cursor: pointer;
 }
+
+.option-box-left .form-select.topic{
+    margin-right: auto;    
+}
+
 
 .option-box-right .btn{
     width: 100%;
@@ -85,6 +88,18 @@ body{
     /* color: #fff;
     background: #202020; */
     /* cursor: pointer; */
+}
+
+.option-box .add-topic-button{
+    width: 20%;
+    height: 80%;
+    border-radius: 12px;
+    margin-top: 5px;
+    margin-left: auto;
+    /* margin-right: auto; */
+    /* color: #fff;
+    background: #202020; */
+    cursor: pointer;
 }
 
 /*==================*/
@@ -193,6 +208,26 @@ body{
     border-radius: 15px;
 }
 
+.add-topic-popup-box{
+    height: 40vh;
+    width: 60vh;
+    left: 50%;
+    transform: translate(-50%, -180%);
+    position: fixed;
+    padding: 0px;
+    /* border: 1px solid greenyellow; */
+}
+
+.add-topic-popup{
+    height: 100%;
+    width: 100%;
+    /* border: 1px solid cyan; */
+    background: #0f0f0f;
+    display: flex;
+    padding: 20px;
+    border-radius: 15px;
+}
+
 .add-item-popup .inputs-box{
     height: 100%;
     width: 100%;
@@ -203,7 +238,8 @@ body{
 .input-title-box,
 .input-text-box,
 .input-title2-box,
-.input-topic-box{
+.input-topic-box,
+.input-newtopic-box{
     /* border: 1px solid yellow; */
     display: flex;
 }
@@ -217,7 +253,8 @@ body{
 .input-title-label, 
 .input-text-label,
 .input-title2-label,
-.input-topic-label{
+.input-topic-label,
+.input-newtopic-label{
     margin: 10px;
     height: 5vh;
     width: 30%;
@@ -240,18 +277,23 @@ body{
 .input-title, 
 .input-text,
 .input-title2,
-.input-topic{
+.input-topic,
+.input-newtopic{
     margin: 10px;
     padding: 10px;
     height: 5vh;
     width: 100%;
     color: #fff;
-    font-size: 3vh;
+    font-size: 2vh;
     background-color: transparent;
     border: 1px solid rgb(243, 243, 243);
     outline: none;
     box-shadow: none;
     transition: 0.5s;
+}
+
+.input-topic{
+    background-color: #0f0f0f ;
 }
 
 .input-img-box label{
@@ -288,6 +330,7 @@ body{
 .input-text:focus,
 .input-title2:focus,
 .input-topic:focus,
+.input-newtopic:focus,
 .input-group input:focus{
     border: 1px solid rgb(255, 123, 0);
     box-shadow: 0px 0px 15px 0px orange;

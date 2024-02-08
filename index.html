@@ -21,8 +21,6 @@
         <div class="container-xxl option-box">
             <div class="container-xxl option-box-left">
                 <select class="form-select topic" aria-label="Default select example" onchange="refreshBoth()">
-                    <option value="all" >All</option>
-
                 </select>
     
                 <select class="form-select sort" aria-label="Default select example">
@@ -30,7 +28,11 @@
                     <option value="name">Name</option>
                     <option value="price">Price</option>
                 </select>
-    
+                
+                <button class="btn btn-info add-topic-button" onclick="addTopicPopUp()">
+                    New Topic
+                </button>
+
             </div>
             <div class="container-xxl option-box-right">
                 <button class="btn btn-warning" type="button" onclick="addItemPopUp()">Add Item</button>
@@ -95,8 +97,8 @@
                     <div class="input-topic-label">
                         Topic :
                     </div>
-                    <input class="input-topic">
-                    </input>
+                    <select class="input-topic">
+                    </select>
                 </div>
 
                 <hr>
@@ -118,23 +120,35 @@
                 <!-- <div class="input-text-box-label">
                 </div> -->
                 <div class="input-button-box">
-                    <button class="input input-button" onclick="closePopUp(add=true)">Add</button>
-                    <button class="input input-cancel-button" onclick="closePopUp()">Cancel</button>
+                    <button class="input input-button" onclick="closeAddItemPopUp(add=true)">Add</button>
+                    <button class="input input-cancel-button" onclick="closeAddItemPopUp(add=false)">Cancel</button>
                 </div>
                 <!-- <div class="input-cancel-button-box">
                 </div> -->
-
-
-                <!-- <input class="input input-img" type="text" name="" id="">
-                <input class="input input-title" type="text" name="" id="">
-                <input class="input input-text" type="text" name="" id="">
-                <input class="input input-title2" type="text" name="" id="">
-                <input class="input input-topic" type="text" name="" id="">-->
-                <!-- <button class="input input-button" onclick="closePopUp()">Click Me</button> -->
             </div>
         </div>
     </div>
     
+    <div class="container-xxl add-topic-popup-box hidden">
+        <div class="add-item-popup">
+            <div class="inputs-box">
+                <br><br><br>
+                <div class="input-newtopic-box">
+                    <div class="input-newtopic-label">
+                        Topic :
+                    </div>
+                    <input class="input-newtopic">
+                    </input>
+                </div>
+                <br><br>
+                <div class="input-button-box">
+                    <button class="input input-button" onclick="closeAddTopicPopUp(add=true)">Add</button>
+                    <button class="input input-cancel-button" onclick="closeAddTopicPopUp(add=false)">Cancel</button>
+                </div>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js" defer></script>
 </body>

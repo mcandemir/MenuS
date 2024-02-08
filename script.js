@@ -109,7 +109,7 @@ function filterDisplayListByTopic(displayList){
     let selectedTopicElement = document.querySelector('.form-select.topic')
 
     for(let i=0; i<displayList.length; i++){
-        if(selectedTopicElement.value == 'all'){
+        if(selectedTopicElement.value == 'topic-all'){
             displayListCopy.push(displayList[i])
         }
         else{
@@ -137,7 +137,7 @@ function addItemPopUp(){
     containerDiv.classList.add('blackout')
 }
 
-function closePopUp(add=false){
+function closeAddItemPopUp(add=false){
     if(add){
         let newItemTitle = document.querySelector('.input-title').value;
         let newItemText = document.querySelector('.input-text').value;
@@ -145,7 +145,7 @@ function closePopUp(add=false){
         let newItemTopic = document.querySelector('.input-topic').value;
         let newItemImgSrc = document.querySelector('#input-img').value;
     
-        offMenuItems.addItem(NEXT_ID, 'images/hamburger.jpg', `${newItemTitle} ${NEXT_ID}`, `${newItemText}`, `${newItemTitle2} ₺`, `topic-${newItemTopic}`);
+        offMenuItems.addItem(NEXT_ID, 'images/hamburger.jpg', `${newItemTitle} ${NEXT_ID}`, `${newItemText}`, `${newItemTitle2} ₺`, `${newItemTopic}`);
         NEXT_ID++;
     }
 
@@ -156,10 +156,46 @@ function closePopUp(add=false){
     containerDiv.classList.remove('blackout');
 }
 
+// add topic within the form
+function addTopicPopUp(){
+    popupBox = document.querySelector('.add-topic-popup-box')
+    containerDiv = document.querySelector('.container')
+
+    popupBox.classList.remove('hidden')
+    containerDiv.classList.add('blackout')
+}
+
+function closeAddTopicPopUp(add=false){
+    if(add){
+        let newTopic = document.querySelector('.input-newtopic').value;
+
+        TOPIC_LIST.push(newTopic);
+        createTopics(TOPIC_LIST);
+    }
+
+    let popupBox = document.querySelector('.add-topic-popup-box');
+    let containerDiv = document.querySelector('.container');
+
+    popupBox.classList.add('hidden');
+    containerDiv.classList.remove('blackout');
+}
+
+// attune topic select boxes
 function createTopics(topicList){
     let topicSelecBox = document.querySelector('.form-select.topic');
+    let topicSelectBoxPopUp = document.querySelector('.input-topic');
     let topicOption = null;
     let topicValue = null;
+    console.log(topicSelecBox)
+
+    if(topicSelecBox.children.length){
+        for(let i=topicSelecBox.children.length - 1; i>=0; i--){
+            topicSelecBox.children[i].remove()
+            topicSelectBoxPopUp.children[i].remove()
+            console.log(topicSelecBox.children[i])
+        }
+    }
+    
 
     for(let i=0; i<topicList.length; i++){
         topicValue = topicList[i].replace(/ /g, '-')
@@ -168,7 +204,9 @@ function createTopics(topicList){
         topicOption.setAttribute('value', `topic-${topicValue}`)
         topicOption.textContent = topicList[i]
         topicSelecBox.appendChild(topicOption)
+        topicSelectBoxPopUp.appendChild(topicOption.cloneNode(deep=true))
     }
+    console.log(topicSelecBox)
 }
 
 
@@ -525,10 +563,12 @@ let initialOffMenuItemList = [
 ]
 
 let TOPIC_LIST = [
+    'All',
     'Cold Drinks',
     'Fast Food',
     'Pasta'
 ]
+createTopics(TOPIC_LIST)
 
 let NEXT_ID = initialOnMenuItemList.length + initialOffMenuItemList.length
 let SELECTED_ELEMENT = null
@@ -542,7 +582,7 @@ offMenuItems.setEventListeners()
 onMenuItems.buildOnMenuItems()
 offMenuItems.buildOffMenuItems()
 
-createTopics(TOPIC_LIST)
+
 
 // offMenuItems.removeItem(7)
 
