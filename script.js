@@ -135,6 +135,9 @@ function addItemPopUp(){
 
     popupBox.classList.remove('hidden')
     containerDiv.classList.add('blackout')
+
+    popupButtonTopic = document.querySelector('.add-topic-button')
+    popupButtonTopic.setAttribute('disabled', true)
 }
 
 function closeAddItemPopUp(add=false){
@@ -154,6 +157,9 @@ function closeAddItemPopUp(add=false){
 
     popupBox.classList.add('hidden');
     containerDiv.classList.remove('blackout');
+
+    popupButtonTopic = document.querySelector('.add-topic-button')
+    popupButtonTopic.removeAttribute('disabled')
 }
 
 // add topic within the form
@@ -163,6 +169,9 @@ function addTopicPopUp(){
 
     popupBox.classList.remove('hidden')
     containerDiv.classList.add('blackout')
+
+    popupButtonItem = document.querySelector('.add-item-button')
+    popupButtonItem.setAttribute('disabled', 'true')
 }
 
 function closeAddTopicPopUp(add=false){
@@ -178,6 +187,9 @@ function closeAddTopicPopUp(add=false){
 
     popupBox.classList.add('hidden');
     containerDiv.classList.remove('blackout');
+
+    popupButtonItem = document.querySelector('.add-item-button')
+    popupButtonItem.removeAttribute('disabled')
 }
 
 // attune topic select boxes
@@ -186,13 +198,11 @@ function createTopics(topicList){
     let topicSelectBoxPopUp = document.querySelector('.input-topic');
     let topicOption = null;
     let topicValue = null;
-    console.log(topicSelecBox)
 
     if(topicSelecBox.children.length){
         for(let i=topicSelecBox.children.length - 1; i>=0; i--){
             topicSelecBox.children[i].remove()
             topicSelectBoxPopUp.children[i].remove()
-            console.log(topicSelecBox.children[i])
         }
     }
     
@@ -206,7 +216,6 @@ function createTopics(topicList){
         topicSelecBox.appendChild(topicOption)
         topicSelectBoxPopUp.appendChild(topicOption.cloneNode(deep=true))
     }
-    console.log(topicSelecBox)
 }
 
 
