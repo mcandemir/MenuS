@@ -156,6 +156,20 @@ function closePopUp(add=false){
     containerDiv.classList.remove('blackout');
 }
 
+function createTopics(topicList){
+    let topicSelecBox = document.querySelector('.form-select.topic');
+    let topicOption = null;
+    let topicValue = null;
+
+    for(let i=0; i<topicList.length; i++){
+        topicValue = topicList[i].replace(/ /g, '-')
+        topicValue = topicValue.toLowerCase()
+        topicOption = document.createElement('option')
+        topicOption.setAttribute('value', `topic-${topicValue}`)
+        topicOption.textContent = topicList[i]
+        topicSelecBox.appendChild(topicOption)
+    }
+}
 
 
 class OnMenuItems{
@@ -510,6 +524,12 @@ let initialOffMenuItemList = [
     },
 ]
 
+let TOPIC_LIST = [
+    'Cold Drinks',
+    'Fast Food',
+    'Pasta'
+]
+
 let NEXT_ID = initialOnMenuItemList.length + initialOffMenuItemList.length
 let SELECTED_ELEMENT = null
 
@@ -522,6 +542,7 @@ offMenuItems.setEventListeners()
 onMenuItems.buildOnMenuItems()
 offMenuItems.buildOffMenuItems()
 
+createTopics(TOPIC_LIST)
 
 // offMenuItems.removeItem(7)
 
